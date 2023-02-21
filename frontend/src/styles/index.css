@@ -22,3 +22,4 @@
     @apply uppercase text-lg transition bg-black border-none text-white p-2 w-full max-w-[200px] xs:max-w-[230px] h-[45px] rounded-full hover:bg-black/90;
   }
 }
+
