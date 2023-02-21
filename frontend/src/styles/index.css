@@ -7,9 +7,36 @@
   html {
     font-family: "Inter", sans-serif;
   }
+  h4 {
+    @apply text-xl;
+    @apply font-medium;
+  }
+  p {
+    @apply text-base;
+  }
+  span {
+    @apply text-sm;
+    @apply text-[#887D7D];
+  }
 }
 
 @layer components {
   /* not working why why */
 }
 
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #a6a6a6;
+    background-clip: content-box;
+    border-radius: 9px;
+    /* border: 5px solid transparent; */
+  }
+  ::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 9px;
+    margin-bottom: 130px;
+  }
+}
