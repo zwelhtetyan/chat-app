@@ -8,26 +8,30 @@
     <link rel="stylesheet" href="../../tailwind-output/index.css" />
   </head>
   <body>
-    <div class="w-full min-h-screen flex items-center justify-center">
+    <div class="w-full min-h-screen flex items-center justify-center p-6">
       <div class="w-full max-w-md flex flex-col items-center justify-center">
         <h1 class="text-2xl font-bold mb-8">Login Account</h1>
 
-        <div class="relative w-full">
-          <input
-            type="text"
-            class="nameInput peer w-full py-2 border-b border-b-gray-500 outline-none mb-5 focus:border-b-black"
-          />
-          <p
-            class="nameInput-label absolute transition-all text-gray-400 top-[10px] left-2 pointer-events-none peer-focus:text-sm"
-          >
-            Username
-          </p>
+        <div class="relative w-full mb-6">
+          <input type="text" class="input-primary nameInput" />
+          <p class="input-primary-label nameInput-label">Username</p>
         </div>
 
-        <p>
+        <div class="relative w-full">
+          <input type="password" class="input-primary passwordInput" />
+          <p class="input-primary-label passwordInput-label">Password</p>
+        </div>
+
+        <p class="self-start mt-3 text-sm">
           If you are new, create acount at
-          <a href="../register/register.html">register</a>
+          <a
+            href="../register/register.html"
+            class="text-blue-500 hover:underline"
+            >Register</a
+          >
         </p>
+
+        <button class="mt-8 btn-primary">login</button>
       </div>
     </div>
 

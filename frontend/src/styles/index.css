@@ -10,5 +10,15 @@
 }
 
 @layer components {
-  /* not working why why */
+  .input-primary {
+    @apply w-full py-2 border-b border-b-gray-600 outline-none focus:border-b-black;
+  }
+
+  .input-primary-label {
+    @apply absolute transition-all text-gray-400 top-[10px] left-2 pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply uppercase text-lg transition bg-black border-none text-white p-2 w-full max-w-[200px] xs:max-w-[230px] h-[45px] rounded-full hover:bg-black/90;
+  }
 }
