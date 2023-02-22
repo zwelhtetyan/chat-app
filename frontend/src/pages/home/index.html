@@ -16,20 +16,24 @@
         <div
           class="h-[50px] border-b-2 border-line-input flex justify-end items-center px-3 fixed top-0 w-full bg-white"
         >
-          <iconify-icon
-            icon="icon-park-solid:setting-two"
-            style="color: #333"
-            width="30"
-            height="30"
-            class="px-2 cursor-pointer"
-          ></iconify-icon>
-          <iconify-icon
-            icon="mdi:users-group"
-            style="color: #333"
-            width="30"
-            height="30"
-            class="px-2 cursor-pointer"
-          ></iconify-icon>
+          <div id="settingBtn">
+            <iconify-icon
+              icon="icon-park-solid:setting-two"
+              style="color: #333"
+              width="30"
+              height="30"
+              class="px-2 cursor-pointer"
+            ></iconify-icon>
+          </div>
+          <div id="usersBtn" class="md:hidden">
+            <iconify-icon
+              icon="mdi:users-group"
+              style="color: #333"
+              width="30"
+              height="30"
+              class="px-2 cursor-pointer"
+            ></iconify-icon>
+          </div>
         </div>
 
         <!-- message box -->
@@ -57,8 +61,19 @@
 
         <!-- typing show -->
         <div
-          class="fixed bg-white w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
+          class="flex items-center space-x-2 fixed bg-white w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
         >
+          <div class="flex space-x-1">
+            <div
+              class="animate-fC w-[10px] h-[10px] rounded-full bg-[#D9D9D9]"
+            ></div>
+            <div
+              class="animate-sC w-[10px] h-[10px] rounded-full bg-[#C7C5C5]"
+            ></div>
+            <div
+              class="animate-tC w-[10px] h-[10px] rounded-full bg-[#A6A6A6]"
+            ></div>
+          </div>
           <p class="text-[#A6A6A6] text-sm">
             <span class="font-medium text-[#A6A6A6] text-sm">Nue</span>
             is typing
@@ -90,10 +105,11 @@
 
       <!-- right side -->
       <div
-        class="fixed top-12 bottom-0 right-0 w-80 overflow-hidden h-screen ph-L:w-96 md:w-[35%] lg:w-[25%]"
+        class="fixed top-12 bottom-0 right-0 w-80 overflow-hidden h-screen ph-L:w-96 md:w-[35%] lg:w-[25%] z-50"
       >
         <div
-          class="absolute top-0 bottom-0 right-0 w-full bg-[#F4F4F4] transition-all duration-150 translate-x-full h-full z-50 md:static md:-translate-x-0"
+          class="absolute top-0 bottom-0 right-0 w-full bg-[#F4F4F4] transition-all duration-150 h-full translate-x-full z-50 md:static md:-translate-x-0"
+          id="usersMenu"
         >
           <!-- online -->
           <div class="p-5">
