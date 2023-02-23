@@ -692,8 +692,16 @@ span {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-10 {
   height: 2.5rem;
+}
+
+.h-\[10px\] {
+  height: 10px;
 }
 
 .h-\[50px\] {
@@ -706,10 +714,6 @@ span {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[10px\] {
-  height: 10px;
 }
 
 .max-h-screen {
@@ -732,12 +736,12 @@ span {
   width: 20rem;
 }
 
-.w-full {
-  width: 100%;
-}
-
 .w-\[10px\] {
   width: 10px;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .max-w-md {
@@ -783,6 +787,16 @@ span {
 
 .animate-sC {
   animation: fC 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 @keyframes fC {
@@ -835,6 +849,12 @@ span {
   justify-content: space-between;
 }
 
+.space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -851,12 +871,6 @@ span {
   --tw-space-x-reverse: 0;
   margin-right: calc(10px * var(--tw-space-x-reverse));
   margin-left: calc(10px * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-1 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .self-start {
@@ -888,21 +902,6 @@ span {
   border-color: rgb(230 230 230 / var(--tw-border-opacity));
 }
 
-.bg-\[\#E6E6E6\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#F4F4F4\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(244 244 244 / var(--tw-bg-opacity));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
 .bg-\[\#A6A6A6\] {
   --tw-bg-opacity: 1;
   background-color: rgb(166 166 166 / var(--tw-bg-opacity));
@@ -916,6 +915,21 @@ span {
 .bg-\[\#D9D9D9\] {
   --tw-bg-opacity: 1;
   background-color: rgb(217 217 217 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#E6E6E6\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#F4F4F4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 244 244 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .p-5 {
