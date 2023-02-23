@@ -51,3 +51,30 @@ function closeUsersMenu() {
   usersMenu.classList.add("translate-x-full");
   usersMenuDth = !usersMenuDth;
 }
+
+/////////////// atuh session ////////////////
+/// that fun will check is user login or not
+(async () => {
+  const auth = localStorage.getItem("auth");
+  if (!auth) {
+    window.location.href = "/login";
+  } else {
+    const { key } = JSON.parse(auth);
+
+    const res = await fetch(`${window.location.origin}/checkKey`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ key }),
+    });
+    if (res.redirected) {
+      window.location.href = res.url; // --> /login
+    }
+  }
+
+  /**** please put SOCKET thing in down there.. ****/
+  //////////////////
+
+  // your code
+
+  /////////////////
+})();
