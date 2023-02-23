@@ -15,3 +15,40 @@ updateLabelOnBlur(nameInput, nameInputLabel);
 
 updateLabelOnFocus(passwordInput, passwordInputLabel);
 updateLabelOnBlur(passwordInput, passwordInputLabel);
+
+/////////// login process /////////////
+
+localStorage.removeItem("auth");
+
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click", async () => {
+  const { name, password } = {
+    name: nameInput.value,
+    password: passwordInput.value,
+  };
+
+  if (!name || !password) {
+    return;
+  }
+
+  const res = await fetch(`${window.location.origin}/isAuthencate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, password }),
+  });
+
+  const { status, key, userId, userName, message } = await res.json();
+
+  if (status === "success") {
+    const auth = { key, userId, userName };
+    window.localStorage.setItem("auth", JSON.stringify(auth));
+    alert(message); //
+    window.location.href = "/";
+  } else {
+    alert(message);
+    console.log(message); //
+  }
+});
