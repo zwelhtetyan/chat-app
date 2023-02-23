@@ -642,8 +642,8 @@ span {
   top: 10px;
 }
 
-.z-20 {
-  z-index: 20;
+.-z-50 {
+  z-index: -50;
 }
 
 .z-50 {
@@ -658,6 +658,11 @@ span {
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
+}
+
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .mb-6 {
@@ -686,6 +691,10 @@ span {
 
 .mt-\[52px\] {
   margin-top: 52px;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
 }
 
 .flex {
@@ -1021,6 +1030,10 @@ span {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1056,6 +1069,11 @@ span {
 .placeholder\:text-\[\#B8B8B8\]::placeholder {
   --tw-text-opacity: 1;
   color: rgb(184 184 184 / var(--tw-text-opacity));
+}
+
+.hover\:bg-\[\#CACACA\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(202 202 202 / var(--tw-bg-opacity));
 }
 
 .hover\:underline:hover {
