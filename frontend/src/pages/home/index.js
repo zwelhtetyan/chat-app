@@ -1,6 +1,9 @@
 // users Menu open and close
 
+import { updateTheme } from "../../utils/theme.js";
+
 const usersButton = document.getElementById("usersBtn");
+const settingButton = document.getElementById("settingBtn");
 const usersMenu = document.getElementById("usersMenu");
 
 let usersMenuDth = false;
@@ -41,6 +44,11 @@ document.addEventListener("touchend", (e) => {
   checkDirection();
 });
 
+// go to user setting
+settingButton.addEventListener("click", () => {
+  window.location.href = "/setting";
+});
+
 // function for open and close usersMenu
 
 const opLayerTag = document.getElementById("opLayer");
@@ -59,6 +67,8 @@ function closeUsersMenu() {
 /////////////// atuh session ////////////////
 /// that fun will check is user login or not
 (async () => {
+  updateTheme();
+
   const auth = localStorage.getItem("auth");
   if (!auth) {
     window.location.href = "/login";
