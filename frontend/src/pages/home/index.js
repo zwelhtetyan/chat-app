@@ -43,13 +43,17 @@ document.addEventListener("touchend", (e) => {
 
 // function for open and close usersMenu
 
+const opLayerTag = document.getElementById("opLayer");
+
 function openUsersMenu() {
   usersMenu.classList.remove("translate-x-full");
   usersMenuDth = !usersMenuDth;
+  opLayerTag.classList.remove("hidden");
 }
 function closeUsersMenu() {
   usersMenu.classList.add("translate-x-full");
   usersMenuDth = !usersMenuDth;
+  opLayerTag.classList.add("hidden");
 }
 
 /////////////// atuh session ////////////////
@@ -68,6 +72,11 @@ function closeUsersMenu() {
     });
     if (res.redirected) {
       window.location.href = res.url; // --> /login
+    } else {
+      const loadingTag = document.getElementById("loading");
+      loadingTag.classList.add("hidden");
+      const mainChatTag = document.getElementById("mainchat");
+      mainChatTag.classList.remove("hidden");
     }
   }
 
