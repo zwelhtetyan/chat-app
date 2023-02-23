@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../tailwind-output/index.css" />
     <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
   </head>
-  <body class="overflow-hidden">
+  <body class="overflow-hidden min-h-screen dark:bg-[#333439] dark:text-white">
     <!-- loading div -->
 
     <div id="loading">
@@ -28,24 +28,22 @@
         <div class="md:w-[65%] lg:w-[75%]">
           <!-- menu bar -->
           <div
-            class="h-[50px] border-b-2 border-line-input flex justify-end items-center px-3 fixed top-0 w-full bg-white"
+            class="h-[50px] border-b-2 border-line-input dark:border-[#515860] flex justify-end items-center px-3 fixed top-0 w-full dark:bg-[#333439] dark:text-white bg-white"
           >
             <div id="settingBtn">
               <iconify-icon
                 icon="icon-park-solid:setting-two"
-                style="color: #333"
                 width="30"
                 height="30"
-                class="px-2 cursor-pointer"
+                class="px-2 cursor-pointer text-[#333] dark:text-white"
               ></iconify-icon>
             </div>
             <div id="usersBtn" class="md:hidden">
               <iconify-icon
                 icon="mdi:users-group"
-                style="color: #333"
                 width="30"
                 height="30"
-                class="px-2 cursor-pointer"
+                class="px-2 cursor-pointer text-[#333] dark:text-white"
               ></iconify-icon>
             </div>
           </div>
@@ -76,7 +74,7 @@
 
           <!-- typing show -->
           <div
-            class="flex items-center space-x-2 fixed bg-white w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
+            class="flex items-center space-x-2 fixed bg-white dark:bg-[#333439] w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
           >
             <div class="flex space-x-1">
               <div
@@ -96,12 +94,12 @@
           </div>
           <!-- inputs box -->
           <div
-            class="flex justify-between space-x-[10px] px-[15px] border-t-2 border-line-input py-[15px] fixed bottom-0 w-full bg-white md:w-[65%] lg:w-[75%]"
+            class="dark:bg-[#333439] flex justify-between space-x-[10px] px-[15px] border-t-2 border-line-input dark:border-[#515860] py-[15px] fixed bottom-0 w-full bg-white md:w-[65%] lg:w-[75%]"
           >
             <input
               type="text"
               placeholder="Message"
-              class="bg-[#E6E6E6] px-5 py-2 rounded-full outline-none placeholder:text-[#B8B8B8] w-11/12 lg:w-full"
+              class="bg-[#E6E6E6] dark:bg-[#515860] px-5 py-2 rounded-full outline-none placeholder:text-[#B8B8B8] w-11/12 lg:w-full"
             />
             <div class="lg:hidden">
               <button
@@ -123,13 +121,13 @@
           class="fixed top-12 bottom-0 right-0 w-80 overflow-hidden h-screen ph-L:w-96 md:w-[35%] lg:w-[25%] z-50"
         >
           <div
-            class="absolute top-0 bottom-0 right-0 w-full bg-[#F4F4F4] transition-all duration-150 h-full translate-x-full z-50 md:static md:-translate-x-0"
+            class="absolute top-0 bottom-0 right-0 w-full bg-[#F4F4F4] dark:bg-[#313235] dark:text-white transition-all duration-150 h-full translate-x-full z-50 md:static md:-translate-x-0"
             id="usersMenu"
           >
             <!-- online -->
             <div class="p-5">
               <div>
-                <p class="font-medium">ONLINE -</p>
+                <p class="font-medium">ONLINE - 2</p>
                 <!-- online people -->
                 <div class="mt-5">
                   <div class="flex items-center justify-between my-2">
@@ -146,9 +144,9 @@
               </div>
             </div>
             <!-- offline -->
-            <div class="p-5 border-t-2 border-[#E6E6E6]">
+            <div class="p-5 border-t-2 border-[#E6E6E6] dark:border-[#515860]">
               <div>
-                <p class="font-medium">OFFLINE -</p>
+                <p class="font-medium">OFFLINE - 1</p>
                 <!-- offline people -->
                 <div class="mt-5">
                   <div class="flex items-center justify-between my-2">
