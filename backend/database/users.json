@@ -35,6 +35,16 @@
     "id": "5737fd0e-ad70-4250-9b40-2426a72907d8",
     "name": "aung",
     "email": "aung@gmail.com",
-    "password": "aung"
+    "password": "aung",
+    "active": false,
+    "socketId": ""
+  },
+  {
+    "id": "0afd5a50-3256-4e55-b015-1b04c2e46e85",
+    "name": "htet",
+    "email": "htet@gmail.com",
+    "password": "htet",
+    "active": false,
+    "socketId": ""
   }
 ]
