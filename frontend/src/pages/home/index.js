@@ -117,7 +117,6 @@ const updateDebounceTypeDiv = debounce(() => {
 
   // your code
   const socket = io("/");
-  // const msgsDiv = document.getElementById("messagesDiv");
   const msgsDivInner = document.getElementById("messagesDiv_inner");
   const inputMsg = document.getElementById("inputMessage");
   const sendBtn = document.getElementById("sendMessage");
@@ -163,18 +162,36 @@ const updateDebounceTypeDiv = debounce(() => {
 
   socket.on("resData", (data) => {
     const oneMsgDiv = `
-    <div class="my-3">
-      <!-- name and date -->
-      <div class="flex space-x-2.5 items-baseline">
-        <p class="font-medium">${data.userName}</p>
+    <div class="my-4">
+      <div class="flex items-start">
+        <div
+          class="w-12 h-12 rounded-full overflow-hidden"
+        >
+          <img
+            src="http://localhost:8080/assets/default-avatar.jpg"
+            alt=""
+          />
+        </div>
+
+        <div class="flex-1 ml-2">
+          <h2 class="font-bold text-lg leading-6">Zwel</h2>
+          <p>Bar lote nay kya ll</p>
+        </div>
       </div>
-      <!-- message -->
-      <p class="ml-5">${data.message}</p>
     </div>
     `;
     msgsDivInner.innerHTML += oneMsgDiv;
     bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
   });
+
+  // <div class="my-3">
+  //     <!-- name and date -->
+  //     <div class="flex space-x-2.5 items-baseline">
+  //       <p class="font-medium">${data.userName}</p>
+  //     </div>
+  //     <!-- message -->
+  //     <p class="ml-5">${data.message}</p>
+  //   </div>
 
   socket.on("typingPs", (name) => {
     typingContainerTag.innerHTML = `

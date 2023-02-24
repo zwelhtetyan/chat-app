@@ -45,6 +45,7 @@ interface ResponseIsAuthencate {
   key?: string;
   userId?: string;
   userName?: string;
+  userImg?: string;
 }
 
 const isAuthencate = (req: Request, res: Response) => {
@@ -74,6 +75,7 @@ const isAuthencate = (req: Request, res: Response) => {
     userId: existUser.id,
     userName: existUser.name,
     message: "authencated",
+    userImg: existUser.userImg,
   };
   res.status(200).json(response);
 };

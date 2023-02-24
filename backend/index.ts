@@ -16,6 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static("../frontend/src"));
+app.use(express.static("assets"));
 
 app.get("/", (req: Request, res: Response) => {
   return res.redirect("/chat");
