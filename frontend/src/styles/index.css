@@ -47,6 +47,7 @@
   ::-webkit-scrollbar-track {
     background: #e6e6e6;
     border-radius: 9px;
-    margin-bottom: 130px;
+    margin-top: 50px;
+    margin-bottom: 75px;
   }
 }
