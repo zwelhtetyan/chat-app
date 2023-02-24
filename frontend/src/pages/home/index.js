@@ -107,9 +107,11 @@ const updateDebounceTypeDiv = debounce(() => {
 
   // your code
   const socket = io("/");
-  const msgsDiv = document.getElementById("messagesDiv");
+  // const msgsDiv = document.getElementById("messagesDiv");
+  const msgsDivInner = document.getElementById("messagesDiv_inner");
   const inputMsg = document.getElementById("inputMessage");
   const sendBtn = document.getElementById("sendMessage");
+  const bottomLayer = document.querySelector(".bottom_layer");
   const { userName } = JSON.parse(auth);
 
   socket.on("connect", () => {
@@ -123,6 +125,8 @@ const updateDebounceTypeDiv = debounce(() => {
 
   inputMsg.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
+      if (inputMsg.value.trim() === "") return;
+
       const data = {
         message: inputMsg.value,
         userName: userName,
@@ -133,6 +137,8 @@ const updateDebounceTypeDiv = debounce(() => {
   });
 
   sendBtn.addEventListener("click", () => {
+    if (inputMsg.value.trim() === "") return;
+
     const data = {
       message: inputMsg.value,
       userName: userName,
@@ -156,7 +162,8 @@ const updateDebounceTypeDiv = debounce(() => {
       <p class="ml-5">${data.message}</p>
     </div>
     `;
-    msgsDiv.innerHTML += oneMsgDiv;
+    msgsDivInner.innerHTML += oneMsgDiv;
+    bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
   socket.on("typingPs", (name) => {
