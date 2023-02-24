@@ -1,6 +1,9 @@
 // users Menu open and close
 
+import { updateTheme } from "../../utils/theme.js";
+
 const usersButton = document.getElementById("usersBtn");
+const settingButton = document.getElementById("settingBtn");
 const usersMenu = document.getElementById("usersMenu");
 
 let usersMenuDth = false;
@@ -39,6 +42,11 @@ document.addEventListener("touchstart", (e) => {
 document.addEventListener("touchend", (e) => {
   touchendX = e.changedTouches[0].screenX;
   checkDirection();
+});
+
+// go to user setting
+settingButton.addEventListener("click", () => {
+  window.location.href = "/setting";
 });
 
 // function for open and close usersMenu
@@ -81,6 +89,8 @@ const updateDebounceTypeDiv = debounce(() => {
 /////////////// atuh session ////////////////
 /// that fun will check is user login or not
 (async () => {
+  updateTheme();
+
   const auth = localStorage.getItem("auth");
   if (!auth) {
     window.location.href = "/login";

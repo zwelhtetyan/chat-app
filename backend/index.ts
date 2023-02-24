@@ -8,6 +8,7 @@ import { chatHistory } from "./models/history";
 import usersData from "./database/users.json";
 // import { users } from "./models/users";
 import { homeRouter } from "./routes/homeRouter";
+import { userSettingRouter } from "./routes/userSettingRouter";
 
 const PORT = process.env.PORT || 8080;
 
@@ -25,6 +26,8 @@ app.use(homeRouter);
 app.use(loginRouter);
 
 app.use(registerRouter);
+
+app.use(userSettingRouter);
 
 const server = app.listen(PORT, () => {
   console.log("Server is running on PORT ", PORT, "http://localhost:" + PORT);
