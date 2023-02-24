@@ -14,6 +14,8 @@ interface RequestRegisterUser {
   name: string;
   email: string;
   password: string;
+  active: boolean;
+  socketId: string;
 }
 
 const registerUser = (req: Request, res: Response) => {
@@ -38,7 +40,14 @@ const registerUser = (req: Request, res: Response) => {
     };
     return res.send(response);
   } else {
-    users.push({ id: uuidv4(), name, email, password });
+    users.push({
+      id: uuidv4(),
+      name,
+      email,
+      password,
+      active: false,
+      socketId: "",
+    });
     writeFileSync(
       join(__dirname, "..", "database", "users.json"),
       JSON.stringify(users)

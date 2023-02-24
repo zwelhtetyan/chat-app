@@ -6,6 +6,8 @@ export interface UserInfo {
   name: string;
   email: string;
   password: string;
+  active: boolean;
+  socketId: string;
 }
 
 export const users: UserInfo[] = JSON.parse(

@@ -18,3 +18,12 @@ const updateTitle = () => {
 };
 
 updateTitle();
+// redirect to login
+
+const logoutBtn = document.getElementById("logOutBtn");
+
+logoutBtn.addEventListener("click", () => {
+  if (confirm("Log out confirm")) {
+    window.location.href = "/login";
+  }
+});
