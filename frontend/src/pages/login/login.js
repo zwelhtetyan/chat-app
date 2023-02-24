@@ -46,7 +46,7 @@ loginBtn.addEventListener("click", async () => {
     const auth = { key, userId, userName };
     window.localStorage.setItem("auth", JSON.stringify(auth));
     alert(message); //
-    window.location.href = "/";
+    window.location.href = "/chat";
   } else {
     alert(message);
     console.log(message); //

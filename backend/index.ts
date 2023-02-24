@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.static("../frontend/src"));
 
 app.get("/", (req: Request, res: Response) => {
-  return res.redirect("/home");
+  return res.redirect("/chat");
 });
 
 app.use(homeRouter);
