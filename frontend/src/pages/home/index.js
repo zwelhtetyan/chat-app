@@ -44,17 +44,39 @@ document.addEventListener("touchend", (e) => {
 // function for open and close usersMenu
 
 const opLayerTag = document.getElementById("opLayer");
+const rightSideTag = document.getElementById("rightSide");
 
 function openUsersMenu() {
   usersMenu.classList.remove("translate-x-full");
   usersMenuDth = !usersMenuDth;
   opLayerTag.classList.remove("hidden");
+  rightSideTag.classList.remove("-z-50");
+  rightSideTag.classList.add("z-50");
 }
 function closeUsersMenu() {
   usersMenu.classList.add("translate-x-full");
   usersMenuDth = !usersMenuDth;
   opLayerTag.classList.add("hidden");
+  rightSideTag.classList.remove("z-50");
+  rightSideTag.classList.add("-z-50");
 }
+
+// debounce function
+function debounce(cb, delay = 1000) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
+}
+
+const typingContainerTag = document.getElementById("typingContainer");
+
+const updateDebounceTypeDiv = debounce(() => {
+  typingContainerTag.innerHTML = "";
+}, 3000);
 
 /////////////// atuh session ////////////////
 /// that fun will check is user login or not
@@ -84,6 +106,135 @@ function closeUsersMenu() {
   //////////////////
 
   // your code
+  const socket = io("/");
+  // const msgsDiv = document.getElementById("messagesDiv");
+  const msgsDivInner = document.getElementById("messagesDiv_inner");
+  const inputMsg = document.getElementById("inputMessage");
+  const sendBtn = document.getElementById("sendMessage");
+  const bottomLayer = document.querySelector(".bottom_layer");
+  const { userName } = JSON.parse(auth);
+
+  socket.on("connect", () => {
+    socket.emit("active", userName);
+    console.log(socket.connected);
+  });
+
+  socket.on("disconnect", () => {
+    socket.emit("offline", userName);
+  });
+
+  inputMsg.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+      if (inputMsg.value.trim() === "") return;
+
+      const data = {
+        message: inputMsg.value,
+        userName: userName,
+      };
+      socket.emit("chat", data);
+      inputMsg.value = "";
+    }
+  });
+
+  sendBtn.addEventListener("click", () => {
+    if (inputMsg.value.trim() === "") return;
+
+    const data = {
+      message: inputMsg.value,
+      userName: userName,
+    };
+    socket.emit("chat", data);
+    inputMsg.value = "";
+  });
+
+  inputMsg.addEventListener("keypress", () => {
+    socket.emit("typing", userName);
+  });
+
+  socket.on("resData", (data) => {
+    const oneMsgDiv = `
+    <div class="my-3">
+      <!-- name and date -->
+      <div class="flex space-x-2.5 items-baseline">
+        <p class="font-medium">${data.userName}</p>
+      </div>
+      <!-- message -->
+      <p class="ml-5">${data.message}</p>
+    </div>
+    `;
+    msgsDivInner.innerHTML += oneMsgDiv;
+    bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  socket.on("typingPs", (name) => {
+    typingContainerTag.innerHTML = `
+    <div class="flex space-x-1">
+      <div
+        class="animate-fC w-[10px] h-[10px] rounded-full bg-[#D9D9D9]"
+      ></div>
+      <div
+        class="animate-sC w-[10px] h-[10px] rounded-full bg-[#C7C5C5]"
+      ></div>
+      <div
+        class="animate-tC w-[10px] h-[10px] rounded-full bg-[#A6A6A6]"
+      ></div>
+      </div>
+      <p class="text-[#A6A6A6] text-sm">
+        <span class="font-medium text-[#A6A6A6] text-sm">${name}</span>
+        is typing
+      </p>
+    </div>
+    `;
+    updateDebounceTypeDiv();
+  });
+
+  socket.on("usersStatus", (usersStatus) => {
+    showUsersStatus(usersStatus);
+  });
+
+  function showUsersStatus(usersStatus) {
+    // show active people
+    const onPpl = usersStatus.filter((user) => {
+      return user.active === true;
+    });
+    const onPplParentTag = document.getElementById("onPplParent");
+
+    onPplParentTag.innerHTML = "";
+    onPpl.forEach((person) => {
+      const onPplDiv = `<div class="flex items-center justify-between my-2">
+                          <p>${person.name}</p>
+                          <iconify-icon
+                            icon="pajamas:status-active"
+                            style="color: #04bf00"
+                            width="12"
+                            height="12"
+                          ></iconify-icon>
+                        </div>
+                        `;
+      onPplParentTag.innerHTML += onPplDiv;
+    });
+
+    // show offline people
+    const offPpl = usersStatus.filter((user) => {
+      return user.active === false;
+    });
+    const offPplParentTag = document.getElementById("offPplParent");
+
+    offPplParentTag.innerHTML = "";
+    offPpl.forEach((person) => {
+      const offPplDiv = `<div class="flex items-center justify-between my-2">
+                          <p>${person.name}</p>
+                          <iconify-icon
+                            icon="pajamas:status-active"
+                            style="color: #a6a6a6"
+                            width="12"
+                            height="12"
+                          ></iconify-icon>
+                        </div>
+                        `;
+      offPplParentTag.innerHTML += offPplDiv;
+    });
+  }
 
   /////////////////
 })();
