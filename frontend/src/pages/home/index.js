@@ -123,6 +123,19 @@ const updateDebounceTypeDiv = debounce(() => {
 
   inputMsg.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
+      if (e.target.value.length > 0) {
+        const data = {
+          message: inputMsg.value,
+          userName: userName,
+        };
+        socket.emit("chat", data);
+        inputMsg.value = "";
+      }
+    }
+  });
+
+  sendBtn.addEventListener("click", () => {
+    if (inputMsg.value.length > 0) {
       const data = {
         message: inputMsg.value,
         userName: userName,
@@ -130,15 +143,6 @@ const updateDebounceTypeDiv = debounce(() => {
       socket.emit("chat", data);
       inputMsg.value = "";
     }
-  });
-
-  sendBtn.addEventListener("click", () => {
-    const data = {
-      message: inputMsg.value,
-      userName: userName,
-    };
-    socket.emit("chat", data);
-    inputMsg.value = "";
   });
 
   inputMsg.addEventListener("keypress", () => {
