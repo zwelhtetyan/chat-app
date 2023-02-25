@@ -40,10 +40,10 @@ loginBtn.addEventListener("click", async () => {
     body: JSON.stringify({ name, password }),
   });
 
-  const { status, key, userId, userName, message } = await res.json();
+  const { status, key, userId, userName, userImg, message } = await res.json();
 
   if (status === "success") {
-    const auth = { key, userId, userName };
+    const auth = { key, userId, userName, userImg };
     window.localStorage.setItem("auth", JSON.stringify(auth));
     alert(message); //
     window.location.href = "/chat";

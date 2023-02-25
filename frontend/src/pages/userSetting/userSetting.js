@@ -9,7 +9,14 @@ const profileImage = document.querySelector(".profile_img");
 const profileBtn = document.querySelector(".profile_button");
 
 // update theme
-(() => updateTheme(ball, themText))();
+(() => {
+  const { userImg } = JSON.parse(localStorage.getItem("auth"));
+
+  updateTheme(ball, themText);
+  profileImage.src = userImg
+    ? `${window.location.origin}/${userImg}`
+    : `${window.location.origin}/assets/default-avatar.jpg`;
+})();
 
 // theme toggler
 themeToggler(themeTogglerBtn, ball, themText);
@@ -63,7 +70,10 @@ profileBtn.addEventListener("click", async () => {
     body: formData,
   });
 
-  console.log(res.ok);
+  if (!res.ok) {
+    alert("Failed to upload profile");
+    return;
+  }
 
   const data = await res.json();
 

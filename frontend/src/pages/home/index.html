@@ -13,7 +13,9 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body class="overflow-hidden min-h-screen dark:bg-[#333439] dark:text-white">
+  <body
+    class="overflow-hidden min-h-screen transition-all dark:bg-[#333439] dark:text-white"
+  >
     <!-- loading div -->
 
     <div id="loading">
@@ -33,7 +35,7 @@
         <div class="md:w-[65%] lg:w-[75%]">
           <!-- menu bar -->
           <div
-            class="h-[50px] border-b-2 border-line-input dark:border-[#515860] flex justify-end items-center px-3 fixed top-0 w-full dark:bg-[#333439] dark:text-white bg-white"
+            class="h-[50px] border-b-2 border-line-input transition-all dark:border-[#515860] flex justify-end items-center px-3 fixed top-0 w-full dark:bg-[#333439] dark:text-white bg-white"
           >
             <div id="settingBtn">
               <iconify-icon
@@ -99,18 +101,18 @@
 
           <!-- typing show -->
           <div
-            class="flex items-center space-x-2 fixed bg-white dark:bg-[#333439] w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
+            class="flex items-center space-x-2 fixed transition-all bg-white dark:bg-[#333439] w-full bottom-[4.5rem] z-50 px-[15px] py-1 md:w-[65%] lg:w-[65%]"
             id="typingContainer"
           ></div>
           <!-- inputs box -->
           <div
-            class="dark:bg-[#333439] flex justify-between z-50 space-x-[10px] px-[15px] border-t-2 border-line-input py-[15px] fixed bottom-0 w-full bg-white md:w-[65%] lg:w-[75%]"
+            class="transition-all dark:bg-[#333439] flex justify-between z-50 space-x-[10px] px-[15px] border-t-2 border-line-input py-[15px] fixed bottom-0 w-full bg-white md:w-[65%] lg:w-[75%]"
           >
             <input
               id="inputMessage"
               type="text"
               placeholder="Message"
-              class="bg-[#E6E6E6] dark:bg-[#515860] px-5 py-2 rounded-full outline-none placeholder:text-[#B8B8B8] w-11/12 lg:w-full"
+              class="transition-all bg-[#E6E6E6] dark:bg-[#515860] px-5 py-2 rounded-full outline-none placeholder:text-[#B8B8B8] w-11/12 lg:w-full"
             />
             <div class="lg:hidden">
               <button

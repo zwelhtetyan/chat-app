@@ -91,11 +91,12 @@ const updateDebounceTypeDiv = debounce(() => {
 (async () => {
   updateTheme();
 
-  const auth = localStorage.getItem("auth");
+  const auth = JSON.parse(localStorage.getItem("auth"));
+
   if (!auth) {
     window.location.href = "/login";
   } else {
-    const { key } = JSON.parse(auth);
+    const { key } = auth;
 
     const res = await fetch(`${window.location.origin}/checkKey`, {
       method: "POST",
@@ -121,7 +122,7 @@ const updateDebounceTypeDiv = debounce(() => {
   const inputMsg = document.getElementById("inputMessage");
   const sendBtn = document.getElementById("sendMessage");
   const bottomLayer = document.querySelector(".bottom_layer");
-  const { userName } = JSON.parse(auth);
+  const { userName } = auth;
 
   socket.on("connect", () => {
     socket.emit("active", userName);
@@ -161,6 +162,8 @@ const updateDebounceTypeDiv = debounce(() => {
   });
 
   socket.on("resData", (data) => {
+    const auth = JSON.parse(localStorage.getItem("auth"));
+
     const oneMsgDiv = `
     <div class="my-4">
       <div class="flex items-start">
@@ -168,14 +171,15 @@ const updateDebounceTypeDiv = debounce(() => {
           class="w-12 h-12 rounded-full overflow-hidden"
         >
           <img
-            src="http://localhost:8080/assets/default-avatar.jpg"
+            src=${auth.userImg}
             alt=""
+            class='w-full h-full object-cover'
           />
         </div>
 
         <div class="flex-1 ml-2">
-          <h2 class="font-bold text-lg leading-6">Zwel</h2>
-          <p>Bar lote nay kya ll</p>
+          <h2 class="font-bold text-lg leading-6">${data.userName}</h2>
+          <p>${data.message}</p>
         </div>
       </div>
     </div>
