@@ -44,6 +44,7 @@ const io = new Server(server);
 
 io.on("connection", (socket: Socket) => {
   // listen for offline users
+
   socket.on("disconnect", () => {
     const offlineUser = usersData.filter((user) => {
       return user.socketId === socket.id;
