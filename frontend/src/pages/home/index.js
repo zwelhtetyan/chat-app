@@ -168,6 +168,9 @@ const updateDebounceTypeDiv = debounce(() => {
     console.log("data", data);
 
     // if is empty string chage default
+    if (data.userImg === "") {
+      data.userImg = "/assets/default-avatar.jpg";
+    }
 
     const oneMsgDiv = `
     <div class="my-4">
