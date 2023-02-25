@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { join } from "path";
 import { v4 } from "uuid";
 import { keys } from "../models/key";
-import { users } from "../models/users";
+import { usersModel } from "../models/users";
 
 const showLoginPage = (req: Request, res: Response) => {
   const url = join(
@@ -51,9 +51,9 @@ interface ResponseIsAuthencate {
 const isAuthencate = (req: Request, res: Response) => {
   const { name, password }: RequestIsAuthencate = req.body;
 
-  const foundUser = users.find(
-    (user) => user.name === name && user.password === password
-  );
+  const foundUser = usersModel
+    .getUsersData()
+    .find((user) => user.name === name && user.password === password);
 
   if (!foundUser) {
     const response: ResponseIsAuthencate = {

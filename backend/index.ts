@@ -3,8 +3,8 @@ import { Server, Socket } from "socket.io";
 import { existsSync, mkdirSync } from "fs";
 import { loginRouter } from "./routes/loginRouter";
 import { registerRouter } from "./routes/registerRouter";
-import { chatHistory } from "./models/history";
-import usersData from "./database/users.json";
+import { historyModel } from "./models/history";
+import { usersModel } from "./models/users";
 import { homeRouter } from "./routes/homeRouter";
 import { userSettingRouter } from "./routes/userSettingRouter";
 
@@ -20,11 +20,10 @@ if (!existsSync("./assets")) {
 app.use(express.static("../frontend/src"));
 app.use(express.static("assets"));
 app.use((req, res, next) => {
-  console.log(
-    `
-    req url: ${req.url}, 
-    req method: ${req.method}, 
-    req date: ${new Date().toUTCString()}`
+  console.count(
+    `url: ${req.url}  |   method: ${
+      req.method
+    }   |   date: ${new Date().toUTCString()}`
   );
   next();
 });
@@ -55,26 +54,44 @@ const io = new Server(server);
 
 io.on("connection", (socket: Socket) => {
   // listen for offline users
-
-  socket.on("disconnect", () => {
-    const offlineUser = usersData.filter((user) => {
-      return user.socketId === socket.id;
+  socket.on("offline", (name) => {
+    const changeUserData = usersModel.getUsersData().map((user) => {
+      if (user.name === name) {
+        return { ...user, active: false };
+      }
+      return user;
     });
-    if (offlineUser[0]) {
-      offlineUser[0].active = false;
-    }
+
+    // change database using model
+    usersModel.setUsersData(changeUserData);
+
+    usersStatusArray(io);
+  });
+  socket.on("disconnect", () => {
+    const changeUserData = usersModel.getUsersData().map((user) => {
+      if (user.socketId === socket.id) {
+        return { ...user, active: false };
+      }
+      return user;
+    });
+
+    // change database using model
+    usersModel.setUsersData(changeUserData);
+
     usersStatusArray(io);
   });
 
   // listen for active users
   socket.on("active", (name) => {
-    const activeUser = usersData.filter((user) => {
-      return user.name === name;
+    // change database using model
+    const changeUserData = usersModel.getUsersData().map((user) => {
+      if (user.name === name) {
+        return { ...user, active: true, socketId: socket.id };
+      }
+      return user;
     });
-    if (activeUser[0]) {
-      activeUser[0].active = true;
-      activeUser[0].socketId = socket.id;
-    }
+
+    usersModel.setUsersData(changeUserData);
 
     usersStatusArray(io);
   });
@@ -98,12 +115,13 @@ io.on("connection", (socket: Socket) => {
 
   // functions for users's status update
   function usersStatusArray(socketIo: Server) {
-    const usersStatus: UsersStatus[] = usersData.map((user) => {
+    const usersStatus: UsersStatus[] = usersModel.getUsersData().map((user) => {
       return {
         name: user.name,
         active: user.active,
       };
     });
+
     socketIo.sockets.emit("usersStatus", usersStatus);
   }
 });

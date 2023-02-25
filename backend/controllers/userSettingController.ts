@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { join } from "path";
 import { writeFileSync } from "fs";
-import { users } from "../models/users";
+import { usersModel } from "../models/users";
 
 const showUserSetting = (req: Request, res: Response) => {
   res.sendFile(
@@ -23,14 +23,13 @@ const uploadUserProfile = (req: Request, res: Response) => {
     const userId = req.params.userId;
     const profileUrl = req.file.filename;
 
-    const updatedUsersArray = users.map((user) =>
-      user.id === userId ? { ...user, userImg: profileUrl } : user
-    );
+    const updatedUsersArray = usersModel
+      .getUsersData()
+      .map((user) =>
+        user.id === userId ? { ...user, userImg: profileUrl } : user
+      );
 
-    writeFileSync(
-      join(__dirname, "..", "database", "users.json"),
-      JSON.stringify(updatedUsersArray)
-    );
+    usersModel.setUsersData(updatedUsersArray);
 
     res.status(200).json({ url: profileUrl });
   } else {

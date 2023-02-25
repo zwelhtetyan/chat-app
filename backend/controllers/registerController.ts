@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { join } from "path";
-import { users } from "../models/users";
+import { usersModel } from "../models/users";
 import { v4 as uuidv4 } from "uuid";
 import { writeFileSync } from "fs";
 
@@ -29,6 +29,8 @@ const registerUser = (req: Request, res: Response) => {
     return res.status(200).send(response);
   }
 
+  const users = usersModel.getUsersData();
+
   const hasUser = users.some(
     (user) => user.name === name || user.email === email
   ); // check user exist
@@ -47,11 +49,9 @@ const registerUser = (req: Request, res: Response) => {
       password,
       active: false,
       socketId: "",
+      userImg: "",
     });
-    writeFileSync(
-      join(__dirname, "..", "database", "users.json"),
-      JSON.stringify(users)
-    );
+    usersModel.setUsersData(users); // set Users Data
     const response: ResponseRegisterUser = {
       status: "success",
       message: "registration successfully!",
