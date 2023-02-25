@@ -8,42 +8,18 @@
     "socketId": ""
   },
   {
-    "id": "aa8e909f-91eb-4b61-8436-f4ebb684ab29",
-    "name": "win",
-    "email": "win@win",
-    "password": "win",
+    "id": "a1c42c14-30e6-46b2-9073-cc24f3cf345c",
+    "name": "z",
+    "email": "z",
+    "password": "zzz",
     "active": false,
     "socketId": ""
   },
   {
-    "id": "f6e9a80a-27ad-4cc9-b375-3c926f07fad4",
-    "name": "gg",
-    "email": "gg@gg",
-    "password": "ggg",
-    "active": false,
-    "socketId": ""
-  },
-  {
-    "id": "44324ff8-3a6d-41ef-9005-61d69d54754f",
-    "name": "Phone Htet Aung",
-    "email": "phone@gmail.com",
-    "password": "phoneHtet",
-    "active": false,
-    "socketId": ""
-  },
-  {
-    "id": "5737fd0e-ad70-4250-9b40-2426a72907d8",
-    "name": "aung",
-    "email": "aung@gmail.com",
-    "password": "aung",
-    "active": false,
-    "socketId": ""
-  },
-  {
-    "id": "0afd5a50-3256-4e55-b015-1b04c2e46e85",
-    "name": "htet",
-    "email": "htet@gmail.com",
-    "password": "htet",
+    "id": "21f19c41-d3f3-4da6-a6de-efb5c540d281",
+    "name": "zwel",
+    "email": "zwel",
+    "password": "zwel",
     "active": false,
     "socketId": ""
   }

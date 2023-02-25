@@ -16,9 +16,10 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static("../frontend/src"));
+app.use(express.static("assets"));
 
 app.get("/", (req: Request, res: Response) => {
-  return res.redirect("/home");
+  return res.redirect("/chat");
 });
 
 app.use(homeRouter);
@@ -43,6 +44,7 @@ const io = new Server(server);
 
 io.on("connection", (socket: Socket) => {
   // listen for offline users
+
   socket.on("disconnect", () => {
     const offlineUser = usersData.filter((user) => {
       return user.socketId === socket.id;
