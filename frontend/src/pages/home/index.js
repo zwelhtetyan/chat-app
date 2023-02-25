@@ -1,7 +1,9 @@
 // users Menu open and close
 
 import { updateTheme } from "../../utils/theme.js";
-
+window.addEventListener("unload", () => {
+  console.log("I don't know how it work");
+});
 const usersButton = document.getElementById("usersBtn");
 const settingButton = document.getElementById("settingBtn");
 const usersMenu = document.getElementById("usersMenu");
@@ -94,7 +96,7 @@ const updateDebounceTypeDiv = debounce(() => {
   const auth = JSON.parse(localStorage.getItem("auth"));
 
   if (!auth) {
-    window.location.href = "/login";
+    return (window.location.href = "/login");
   } else {
     const { key } = auth;
 
@@ -104,7 +106,7 @@ const updateDebounceTypeDiv = debounce(() => {
       body: JSON.stringify({ key }),
     });
     if (res.redirected) {
-      window.location.href = res.url; // --> /login
+      return (window.location.href = res.url); // --> /login
     } else {
       const loadingTag = document.getElementById("loading");
       loadingTag.classList.add("hidden");
@@ -163,6 +165,13 @@ const updateDebounceTypeDiv = debounce(() => {
   });
 
   socket.on("resData", (data) => {
+    console.log("data", data);
+
+    // if is empty string chage default
+    if (data.userImg === "") {
+      data.userImg = "/assets/default-avatar.jpg";
+    }
+
     const oneMsgDiv = `
     <div class="my-4">
       <div class="flex items-start">

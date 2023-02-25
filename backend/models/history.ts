@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
 export interface ChatHistory {
@@ -8,15 +8,21 @@ export interface ChatHistory {
   createdAt: string;
 }
 
-export const chatHistory: ChatHistory[] = JSON.parse(
-  readFileSync(join(__dirname, "..", "database", "history.json"), {
-    encoding: "utf-8",
-  })
-) as ChatHistory[];
+const getChatHistory = (): ChatHistory[] =>
+  JSON.parse(
+    readFileSync(join(__dirname, "..", "database", "history.json"), {
+      encoding: "utf-8",
+    })
+  ) as ChatHistory[];
 
-/*
-// example
+const setChatHistory = (chatHistory: ChatHistory[]) => {
+  writeFileSync(
+    join(__dirname, "..", "database", "history.json"),
+    JSON.stringify(chatHistory)
+  );
+};
 
-[{"id":1,"userId":"xxx2","inputMessage":"Hello I'm Win","createdAt":"2023-02-20T07:58:27.214Z"}]
-
-*/
+export const historyModel = {
+  getChatHistory,
+  setChatHistory,
+};
