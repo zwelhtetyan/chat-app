@@ -126,7 +126,6 @@ const updateDebounceTypeDiv = debounce(() => {
 
   socket.on("connect", () => {
     socket.emit("active", userName);
-    console.log(socket.connected);
   });
 
   socket.on("disconnect", () => {
