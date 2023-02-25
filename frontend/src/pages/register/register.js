@@ -32,7 +32,6 @@ registerBtn.addEventListener("click", async () => {
     password: passwordInput.value,
   };
 
-  console.log(name, email, password);
   if (!name || !email || !password) {
     return;
   }
@@ -54,6 +53,5 @@ registerBtn.addEventListener("click", async () => {
     }
   } else {
     alert(message); //
-    console.log(message);
   }
 });

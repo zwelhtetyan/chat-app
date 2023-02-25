@@ -49,6 +49,5 @@ loginBtn.addEventListener("click", async () => {
     window.location.href = "/chat";
   } else {
     alert(message);
-    console.log(message); //
   }
 });

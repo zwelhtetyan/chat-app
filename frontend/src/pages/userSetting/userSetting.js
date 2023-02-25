@@ -7,7 +7,6 @@ const title = document.querySelector(".userSetting_title");
 const profileInput = document.querySelector(".profileInput");
 const profileImage = document.querySelector(".profile_img");
 const profileBtn = document.querySelector(".profile_button");
-console.log(profileBtn.innerText);
 // update theme
 (() => {
   const { userImg } = JSON.parse(localStorage.getItem("auth"));
@@ -42,7 +41,6 @@ let FILE;
 
 profileInput.addEventListener("change", () => {
   const file = profileInput.files[0];
-  console.log("input change", file);
   if (!file) return;
 
   const maxSize = 1 * 1024 * 1024;
