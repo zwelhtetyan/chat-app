@@ -122,7 +122,7 @@ const updateDebounceTypeDiv = debounce(() => {
   const inputMsg = document.getElementById("inputMessage");
   const sendBtn = document.getElementById("sendMessage");
   const bottomLayer = document.querySelector(".bottom_layer");
-  const { userName } = auth;
+  const { userName, userImg } = auth;
 
   socket.on("connect", () => {
     socket.emit("active", userName);
@@ -140,6 +140,7 @@ const updateDebounceTypeDiv = debounce(() => {
       const data = {
         message: inputMsg.value,
         userName: userName,
+        userImg,
       };
       socket.emit("chat", data);
       inputMsg.value = "";
@@ -152,6 +153,7 @@ const updateDebounceTypeDiv = debounce(() => {
     const data = {
       message: inputMsg.value,
       userName: userName,
+      userImg,
     };
     socket.emit("chat", data);
     inputMsg.value = "";
@@ -162,8 +164,6 @@ const updateDebounceTypeDiv = debounce(() => {
   });
 
   socket.on("resData", (data) => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
-
     const oneMsgDiv = `
     <div class="my-4">
       <div class="flex items-start">
@@ -171,7 +171,7 @@ const updateDebounceTypeDiv = debounce(() => {
           class="w-12 h-12 rounded-full overflow-hidden"
         >
           <img
-            src=${auth.userImg}
+            src=${data.userImg}
             alt=""
             class='w-full h-full object-cover'
           />
