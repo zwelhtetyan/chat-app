@@ -72,12 +72,14 @@ function closeUsersMenu() {
 }
 
 // debounce function
+let uniqueSet = new Set();
 function debounce(cb, delay = 1000) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       cb(...args);
+      uniqueSet.clear();
     }, delay);
   };
 }
@@ -86,7 +88,7 @@ const typingContainerTag = document.getElementById("typingContainer");
 
 const updateDebounceTypeDiv = debounce(() => {
   typingContainerTag.innerHTML = "";
-}, 3000);
+}, 2000);
 
 /////////////// atuh session ////////////////
 /// that fun will check is user login or not
@@ -194,6 +196,7 @@ const updateDebounceTypeDiv = debounce(() => {
     `;
     msgsDivInner.innerHTML += oneMsgDiv;
     bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
+    typingContainerTag.innerHTML = ""; /// added win
   });
 
   // <div class="my-3">
@@ -206,6 +209,24 @@ const updateDebounceTypeDiv = debounce(() => {
   //   </div>
 
   socket.on("typingPs", (name) => {
+    uniqueSet.add(name);
+    let typingPsText = "";
+    const typingPsAry = [...uniqueSet];
+    typingPsAry.forEach((typingP, idx) => {
+      if (idx === 0) {
+        typingPsText += typingP;
+      } else {
+        typingPsText += ", " + typingP;
+      }
+    });
+
+    setTimeout(() => {
+      typingPsAry.forEach((typingP) => {
+        if (typingP !== name) {
+          uniqueSet.delete(typingP);
+        }
+      });
+    }, 1000);
     typingContainerTag.innerHTML = `
     <div class="flex space-x-1">
       <div
@@ -219,7 +240,7 @@ const updateDebounceTypeDiv = debounce(() => {
       ></div>
       </div>
       <p class="text-[#A6A6A6] text-sm">
-        <span class="font-medium text-[#A6A6A6] text-sm">${name}</span>
+        <span  class="font-medium text-[#A6A6A6] text-sm">${typingPsText}</span>
         is typing
       </p>
     </div>
