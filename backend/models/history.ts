@@ -2,10 +2,11 @@ import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
 export interface ChatHistory {
-  id: number;
-  userId: string;
-  inputMessage: string;
-  createdAt: string;
+  id: string;
+  userName: string;
+  userImg: string;
+  message: string;
+  timestamp: number;
 }
 
 const getChatHistory = (): ChatHistory[] =>

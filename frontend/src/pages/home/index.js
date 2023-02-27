@@ -1,6 +1,7 @@
+import { updateTheme } from "../../utils/theme.js";
+// import { sub } from "date-fns";
 // users Menu open and close
 
-import { updateTheme } from "../../utils/theme.js";
 window.addEventListener("unload", () => {
   console.log("I don't know how it work");
 });
@@ -71,8 +72,8 @@ function closeUsersMenu() {
   rightSideTag.classList.add("-z-50");
 }
 
-// debounce function
-let uniqueSet = new Set();
+////////////// debounce function ///////////////////////////
+
 function debounce(cb, delay = 1000) {
   let timer;
   return (...args) => {
@@ -132,34 +133,24 @@ const updateDebounceTypeDiv = debounce(() => {
     socket.emit("active", userName);
   });
 
-  socket.on("disconnect", () => {
-    socket.emit("offline", userName);
+  socket.on("histData", (histData) => {
+    histData.forEach((data) => {
+      setMessages(data);
+    });
   });
+
+  // socket.on("disconnect", () => {
+  //   socket.emit("offline", userName);
+  // });
 
   inputMsg.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
-      if (inputMsg.value.trim() === "") return;
-
-      const data = {
-        message: inputMsg.value,
-        userName: userName,
-        userImg,
-      };
-      socket.emit("chat", data);
-      inputMsg.value = "";
+      sendDataToSocket();
     }
   });
 
   sendBtn.addEventListener("click", () => {
-    if (inputMsg.value.trim() === "") return;
-
-    const data = {
-      message: inputMsg.value,
-      userName: userName,
-      userImg,
-    };
-    socket.emit("chat", data);
-    inputMsg.value = "";
+    sendDataToSocket();
   });
 
   inputMsg.addEventListener("keypress", () => {
@@ -168,45 +159,13 @@ const updateDebounceTypeDiv = debounce(() => {
 
   socket.on("resData", (data) => {
     console.log("data", data);
-
-    // if is empty string chage default
-    if (data.userImg === "") {
-      data.userImg = "/assets/default-avatar.jpg";
-    }
-
-    const oneMsgDiv = `
-    <div class="my-4">
-      <div class="flex items-start">
-        <div
-          class="w-12 h-12 rounded-full overflow-hidden"
-        >
-          <img
-            src=${data.userImg}
-            alt=""
-            class='w-full h-full object-cover'
-          />
-        </div>
-
-        <div class="flex-1 ml-2">
-          <h2 class="font-bold text-lg leading-6">${data.userName}</h2>
-          <p>${data.message}</p>
-        </div>
-      </div>
-    </div>
-    `;
-    msgsDivInner.innerHTML += oneMsgDiv;
-    bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
-    typingContainerTag.innerHTML = ""; /// added win
+    console.log(typeof data.timestamp);
+    setMessages(data);
   });
 
-  // <div class="my-3">
-  //     <!-- name and date -->
-  //     <div class="flex space-x-2.5 items-baseline">
-  //       <p class="font-medium">${data.userName}</p>
-  //     </div>
-  //     <!-- message -->
-  //     <p class="ml-5">${data.message}</p>
-  //   </div>
+  setInterval(() => {
+    setDate();
+  }, 5000);
 
   socket.on("typingPs", (name) => {
     uniqueSet.add(name);
@@ -229,20 +188,20 @@ const updateDebounceTypeDiv = debounce(() => {
     }, 1000);
     typingContainerTag.innerHTML = `
     <div class="flex space-x-1">
-      <div
-        class="animate-fC w-[10px] h-[10px] rounded-full bg-[#D9D9D9]"
-      ></div>
-      <div
-        class="animate-sC w-[10px] h-[10px] rounded-full bg-[#C7C5C5]"
-      ></div>
-      <div
-        class="animate-tC w-[10px] h-[10px] rounded-full bg-[#A6A6A6]"
-      ></div>
-      </div>
-      <p class="text-[#A6A6A6] text-sm">
-        <span  class="font-medium text-[#A6A6A6] text-sm">${typingPsText}</span>
-        is typing
-      </p>
+    <div
+    class="animate-fC w-[10px] h-[10px] rounded-full bg-[#D9D9D9]"
+    ></div>
+    <div
+    class="animate-sC w-[10px] h-[10px] rounded-full bg-[#C7C5C5]"
+    ></div>
+    <div
+    class="animate-tC w-[10px] h-[10px] rounded-full bg-[#A6A6A6]"
+    ></div>
+    </div>
+    <p class="text-[#A6A6A6] text-sm">
+    <span class="font-medium text-[#A6A6A6] text-sm">${name}</span>
+    is typing
+    </p>
     </div>
     `;
     updateDebounceTypeDiv();
@@ -251,6 +210,134 @@ const updateDebounceTypeDiv = debounce(() => {
   socket.on("usersStatus", (usersStatus) => {
     showUsersStatus(usersStatus);
   });
+
+  ///////////////// Functions /////////////////////////
+
+  function sendDataToSocket() {
+    if (inputMsg.value.trim() === "") return;
+    const timestamp = Date.now();
+    console.log(typeof timestamp);
+
+    const data = {
+      message: inputMsg.value,
+      userName: userName,
+      userImg,
+      timestamp,
+    };
+    socket.emit("chat", data);
+    inputMsg.value = "";
+  }
+
+  function setMessages(data) {
+    // if is empty string chage default
+    if (data.userImg === "") {
+      data.userImg = "/assets/default-avatar.jpg";
+    }
+
+    const oneMsgDiv = `
+        <div class="my-4">
+          <div class="flex items-start">
+            <div
+              class="w-12 h-12 rounded-full overflow-hidden"
+            >
+              <img
+                src=${data.userImg}
+                alt=""
+                class='w-full h-full object-cover'
+              />
+            </div>
+    
+            <div class="flex-1 ml-2">
+              <div class="flex items-baseline space-x-2">
+                <h2 class="font-bold text-lg leading-6">${data.userName}</h2>
+                <span class="date"></span>
+                <p class="timestamp invisible">${data.timestamp}</p>
+              </div>
+              <p>${data.message}</p>
+            </div>
+          </div>
+        </div>
+        `;
+    msgsDivInner.innerHTML += oneMsgDiv;
+    setDate();
+    bottomLayer.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function setDate() {
+    const timestampTag = document.querySelectorAll(".timestamp");
+    let i = 0;
+    if (timestampTag) {
+      timestampTag.forEach((tag) => {
+        const timestamp = +tag.innerHTML;
+        const date = timeSince(timestamp);
+        const dateTag = document.querySelectorAll(".date")[i];
+        dateTag.innerHTML = date;
+        i++;
+      });
+    }
+  }
+
+  function timeSince(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+
+    let interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " years ago";
+    }
+
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      if (Math.floor(interval) === 1) {
+        return Math.floor(interval) + " month ago";
+      } else {
+        return Math.floor(interval) + " months ago";
+      }
+    }
+
+    interval = seconds / 86400;
+    if (interval > 28) {
+      return "4 weeks ago";
+    }
+    if (interval > 21) {
+      return "3 weeks ago";
+    }
+    if (interval > 14) {
+      return "2 weeks ago";
+    }
+    if (interval > 7) {
+      return "1 week ago";
+    }
+    if (interval > 1) {
+      if (Math.floor(interval) === 1) {
+        return Math.floor(interval) + " day ago";
+      } else {
+        return Math.floor(interval) + " days ago";
+      }
+    }
+
+    interval = seconds / 3600;
+    if (interval > 1) {
+      if (Math.floor(interval) === 1) {
+        return Math.floor(interval) + " hour ago";
+      } else {
+        return Math.floor(interval) + " hours ago";
+      }
+    }
+
+    interval = seconds / 60;
+    if (interval > 1) {
+      if (Math.floor(interval) === 1) {
+        return Math.floor(interval) + " minute ago";
+      } else {
+        return Math.floor(interval) + " minutes ago";
+      }
+    }
+
+    if (interval < 1) {
+      return "less than a minute ago";
+    }
+  }
 
   function showUsersStatus(usersStatus) {
     // show active people

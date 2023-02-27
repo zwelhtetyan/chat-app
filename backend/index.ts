@@ -7,6 +7,7 @@ import { historyModel } from "./models/history";
 import { usersModel } from "./models/users";
 import { homeRouter } from "./routes/homeRouter";
 import { userSettingRouter } from "./routes/userSettingRouter";
+import { format, getHours, formatDistance } from "date-fns";
 
 const PORT = process.env.PORT || 8080;
 
@@ -54,23 +55,24 @@ const io = new Server(server);
 
 io.on("connection", (socket: Socket) => {
   // listen for offline users
-  socket.on("offline", (name) => {
-    const changeUserData = usersModel.getUsersData().map((user) => {
-      if (user.name === name) {
-        return { ...user, active: false };
-      }
-      return user;
-    });
+  // socket.on("offline", (name) => {
+  //   const changeUserData = usersModel.getUsersData().map((user) => {
+  //     if (user.name === name) {
+  //       return { ...user, active: false, socketId: "" };
+  //     }
+  //     return user;
+  //   });
 
-    // change database using model
-    usersModel.setUsersData(changeUserData);
+  //   // change database using model
+  //   usersModel.setUsersData(changeUserData);
 
-    usersStatusArray(io);
-  });
+  //   usersStatusArray(io);
+  // });
+
   socket.on("disconnect", () => {
     const changeUserData = usersModel.getUsersData().map((user) => {
       if (user.socketId === socket.id) {
-        return { ...user, active: false };
+        return { ...user, active: false, socketId: "" };
       }
       return user;
     });
@@ -94,10 +96,36 @@ io.on("connection", (socket: Socket) => {
     usersModel.setUsersData(changeUserData);
 
     usersStatusArray(io);
+    const histData = historyModel.getChatHistory();
+
+    socket.emit("histData", histData);
   });
 
   // listen for message
-  socket.on("chat", (data) => {
+  interface IncomeData {
+    message: string;
+    userName: string;
+    userImg: string;
+    timestamp: number;
+  }
+
+  socket.on("chat", (data: IncomeData) => {
+    const user = usersModel.getUsersData().filter((user) => {
+      return user.name === data.userName;
+    });
+    console.log(data);
+
+    const histData = {
+      id: user[0].id,
+      userName: data.userName,
+      userImg: data.userImg,
+      message: data.message,
+      timestamp: data.timestamp,
+    };
+
+    const messages = historyModel.getChatHistory();
+    messages.push(histData);
+    historyModel.setChatHistory(messages);
     io.sockets.emit("resData", data);
   });
 
