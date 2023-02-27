@@ -74,6 +74,8 @@ function closeUsersMenu() {
 
 ////////////// debounce function ///////////////////////////
 
+let uniqueSet = new Set();
+
 function debounce(cb, delay = 1000) {
   let timer;
   return (...args) => {
@@ -165,7 +167,7 @@ const updateDebounceTypeDiv = debounce(() => {
 
   setInterval(() => {
     setDate();
-  }, 5000);
+  }, 60000);
 
   socket.on("typingPs", (name) => {
     uniqueSet.add(name);
@@ -199,7 +201,7 @@ const updateDebounceTypeDiv = debounce(() => {
     ></div>
     </div>
     <p class="text-[#A6A6A6] text-sm">
-    <span class="font-medium text-[#A6A6A6] text-sm">${name}</span>
+    <span class="font-medium text-[#A6A6A6] text-sm">${typingPsText}</span>
     is typing
     </p>
     </div>
