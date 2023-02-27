@@ -80,6 +80,7 @@ function debounce(cb, delay = 1000) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       cb(...args);
+      uniqueSet.clear();
     }, delay);
   };
 }
@@ -88,7 +89,7 @@ const typingContainerTag = document.getElementById("typingContainer");
 
 const updateDebounceTypeDiv = debounce(() => {
   typingContainerTag.innerHTML = "";
-}, 3000);
+}, 2000);
 
 /////////////// atuh session ////////////////
 /// that fun will check is user login or not
@@ -167,6 +168,24 @@ const updateDebounceTypeDiv = debounce(() => {
   }, 5000);
 
   socket.on("typingPs", (name) => {
+    uniqueSet.add(name);
+    let typingPsText = "";
+    const typingPsAry = [...uniqueSet];
+    typingPsAry.forEach((typingP, idx) => {
+      if (idx === 0) {
+        typingPsText += typingP;
+      } else {
+        typingPsText += ", " + typingP;
+      }
+    });
+
+    setTimeout(() => {
+      typingPsAry.forEach((typingP) => {
+        if (typingP !== name) {
+          uniqueSet.delete(typingP);
+        }
+      });
+    }, 1000);
     typingContainerTag.innerHTML = `
     <div class="flex space-x-1">
     <div
