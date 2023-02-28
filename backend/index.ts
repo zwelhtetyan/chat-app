@@ -7,7 +7,6 @@ import { historyModel } from "./models/history";
 import { usersModel } from "./models/users";
 import { homeRouter } from "./routes/homeRouter";
 import { userSettingRouter } from "./routes/userSettingRouter";
-import { format, getHours, formatDistance } from "date-fns";
 
 const PORT = process.env.PORT || 8080;
 
@@ -137,6 +136,7 @@ io.on("connection", (socket: Socket) => {
   interface UsersStatus {
     name: string;
     active: boolean;
+    userImg: string;
   }
 
   // functions
@@ -147,6 +147,7 @@ io.on("connection", (socket: Socket) => {
       return {
         name: user.name,
         active: user.active,
+        userImg: user.userImg,
       };
     });
 
