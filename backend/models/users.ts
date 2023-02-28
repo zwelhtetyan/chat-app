@@ -8,7 +8,7 @@ export interface UserInfo {
   password: string;
   active: boolean;
   socketId: string;
-  userImg?: string;
+  userImg: string;
 }
 
 const getUsersData = (): UserInfo[] =>

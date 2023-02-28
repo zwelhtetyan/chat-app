@@ -35,23 +35,30 @@
         <div class="md:w-[65%] lg:w-[75%]">
           <!-- menu bar -->
           <div
-            class="h-[50px] border-b-2 border-line-input transition-all dark:border-[#515860] flex justify-end items-center px-3 fixed top-0 w-full dark:bg-[#333439] dark:text-white bg-white"
+            class="h-[50px] border-b-2 border-line-input transition-all dark:border-[#515860] flex justify-between items-center px-3 fixed top-0 w-full dark:bg-[#333439] dark:text-white bg-white"
           >
-            <div id="settingBtn">
-              <iconify-icon
-                icon="icon-park-solid:setting-two"
-                width="30"
-                height="30"
-                class="px-2 cursor-pointer text-[#333] dark:text-white"
-              ></iconify-icon>
+            <!-- username Tag -->
+            <div>
+              <h4 class="userTag font-medium"></h4>
             </div>
-            <div id="usersBtn" class="md:hidden">
-              <iconify-icon
-                icon="mdi:users-group"
-                width="30"
-                height="30"
-                class="px-2 cursor-pointer text-[#333] dark:text-white"
-              ></iconify-icon>
+            <!-- icon -->
+            <div class="flex">
+              <div id="settingBtn">
+                <iconify-icon
+                  icon="icon-park-solid:setting-two"
+                  width="30"
+                  height="30"
+                  class="px-2 cursor-pointer text-[#333] dark:text-white"
+                ></iconify-icon>
+              </div>
+              <div id="usersBtn" class="md:hidden">
+                <iconify-icon
+                  icon="mdi:users-group"
+                  width="30"
+                  height="30"
+                  class="px-2 cursor-pointer text-[#333] dark:text-white"
+                ></iconify-icon>
+              </div>
             </div>
           </div>
 
@@ -125,7 +132,10 @@
             <!-- online -->
             <div class="p-5">
               <div>
-                <p class="font-medium">ONLINE - 2</p>
+                <div class="flex space-x-1">
+                  <p class="font-medium">ONLINE -</p>
+                  <p class="font-medium onNo"></p>
+                </div>
                 <!-- online people -->
                 <div class="mt-5" id="onPplParent">
                   <!-- other people -->
@@ -135,7 +145,10 @@
             <!-- offline -->
             <div class="p-5 border-t-2 border-[#E6E6E6] dark:border-[#515860]">
               <div>
-                <p class="font-medium">OFFLINE - 1</p>
+                <div class="flex space-x-1">
+                  <p class="font-medium">OFFLINE -</p>
+                  <p class="font-medium offNo"></p>
+                </div>
                 <!-- offline people -->
                 <div class="mt-5" id="offPplParent">
                   <!-- other people -->

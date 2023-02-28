@@ -1,5 +1,4 @@
 import { updateTheme } from "../../utils/theme.js";
-// import { sub } from "date-fns";
 // users Menu open and close
 
 window.addEventListener("unload", () => {
@@ -132,6 +131,9 @@ const updateDebounceTypeDiv = debounce(() => {
   socket.on("connect", () => {
     socket.emit("active", userName);
   });
+
+  const userNameTag = document.querySelector(".userTag");
+  userNameTag.innerHTML = userName;
 
   socket.on("histData", (histData) => {
     histData.forEach((data) => {
@@ -344,42 +346,113 @@ const updateDebounceTypeDiv = debounce(() => {
     const onPpl = usersStatus.filter((user) => {
       return user.active === true;
     });
-    const onPplParentTag = document.getElementById("onPplParent");
 
+    const onPplParentTag = document.getElementById("onPplParent");
+    const onNoTag = document.querySelector(".onNo");
+    const onColor = "04bf00";
     onPplParentTag.innerHTML = "";
-    onPpl.forEach((person) => {
-      const onPplDiv = `<div class="flex items-center justify-between my-2">
-                          <p>${person.name}</p>
-                          <iconify-icon
-                            icon="pajamas:status-active"
-                            style="color: #04bf00"
-                            width="12"
-                            height="12"
-                          ></iconify-icon>
-                        </div>
-                        `;
-      onPplParentTag.innerHTML += onPplDiv;
-    });
+
+    generateOnAndOffDiv(onPpl, onPplParentTag, onNoTag, onColor);
+    // const activeNo = onPpl.length;
+    // onNoTag.innerHTML = ` ${activeNo}`;
+
+    // onPpl.forEach((user) => {
+    //   if (user.userImg === "") {
+    //     user.userImg = "/assets/default-avatar.jpg";
+    //   }
+    //   const onPplDiv = `
+    //                     <div class="flex items-center justify-between my-2">
+    //                       <div class="flex items-center space-x-3">
+    //                         <div
+    //                         class="w-8 h-8 rounded-full overflow-hidden"
+    //                         >
+    //                           <img
+    //                             src=${user.userImg}
+    //                             alt=""
+    //                             class='w-full h-full object-cover'
+    //                           />
+    //                         </div>
+    //                         <p>${user.name}</p>
+    //                       </div>
+    //                       <iconify-icon
+    //                         icon="pajamas:status-active"
+    //                         style="color: #${onColor}"
+    //                         width="12"
+    //                         height="12"
+    //                       ></iconify-icon>
+    //                     </div>
+    //                       `;
+    //   onPplParentTag.innerHTML += onPplDiv;
+    // });
 
     // show offline people
     const offPpl = usersStatus.filter((user) => {
       return user.active === false;
     });
-    const offPplParentTag = document.getElementById("offPplParent");
 
-    offPplParentTag.innerHTML = "";
-    offPpl.forEach((person) => {
-      const offPplDiv = `<div class="flex items-center justify-between my-2">
-                          <p>${person.name}</p>
+    if (offPpl) {
+      const offPplParentTag = document.getElementById("offPplParent");
+      const offNoTag = document.querySelector(".offNo");
+      const offColor = "a6a6a6";
+      offPplParentTag.innerHTML = "";
+
+      generateOnAndOffDiv(offPpl, offPplParentTag, offNoTag, offColor);
+      // const offlineNo = offPpl.length;
+      // offNoTag.innerHTML = ` ${offlineNo}`;
+      // offPpl.forEach((person) => {
+      //   const offPplDiv = `<div class="flex items-center justify-between my-2">
+      //                       <p>${person.name}</p>
+      //                       <iconify-icon
+      //                         icon="pajamas:status-active"
+      //                         style="color: #${offColor}"
+      //                         width="12"
+      //                         height="12"
+      //                       ></iconify-icon>
+      //                     </div>
+      //                     `;
+      //   offPplParentTag.innerHTML += offPplDiv;
+      // });
+    }
+  }
+
+  function generateOnAndOffDiv(
+    partiPpl,
+    partiPplParentTag,
+    partiNoTag,
+    statusColor
+  ) {
+    const partiNo = partiPpl.length;
+    partiNoTag.innerHTML = ` ${partiNo}`;
+
+    // partiPplParentTag.innerHtml = "";
+
+    partiPpl.forEach((user) => {
+      if (user.userImg === "") {
+        user.userImg = "/assets/default-avatar.jpg";
+      }
+      const partiPplDiv = `
+                        <div class="flex items-center justify-between my-2">
+                          <div class="flex items-center space-x-3">
+                            <div
+                            class="w-8 h-8 rounded-full overflow-hidden"
+                            >
+                              <img
+                                src=${user.userImg}
+                                alt=""
+                                class='w-full h-full object-cover'
+                              />
+                            </div>
+                            <p>${user.name}</p>
+                          </div>
                           <iconify-icon
                             icon="pajamas:status-active"
-                            style="color: #a6a6a6"
+                            style="color: #${statusColor}"
                             width="12"
                             height="12"
                           ></iconify-icon>
                         </div>
-                        `;
-      offPplParentTag.innerHTML += offPplDiv;
+                          `;
+      partiPplParentTag.innerHTML += partiPplDiv;
     });
   }
 

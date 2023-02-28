@@ -11,8 +11,5 @@
   "license": "ISC",
   "devDependencies": {
     "tailwindcss": "^3.2.7"
-  },
-  "dependencies": {
-    "date-fns": "^2.29.3"
   }
 }
