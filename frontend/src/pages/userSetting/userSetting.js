@@ -39,9 +39,11 @@ logoutBtn.addEventListener("click", () => {
 
 let FILE;
 
-profileInput.addEventListener("change", () => {
+profileInput.addEventListener("change", async (e) => {
   const file = profileInput.files[0];
   if (!file) return;
+
+  if (!e.target.value) return;
 
   const maxSize = 1 * 1024 * 1024;
 
@@ -52,11 +54,6 @@ profileInput.addEventListener("change", () => {
 
   FILE = file;
   profileImage.src = URL.createObjectURL(file);
-  profileBtn.textContent = "Update Profile";
-});
-
-profileBtn.addEventListener("click", async () => {
-  if (profileBtn.innerText === "Edit Profile") return;
 
   const formData = new FormData();
   const { userId } = JSON.parse(localStorage.getItem("auth"));
