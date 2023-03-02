@@ -44,12 +44,13 @@ registerBtn.addEventListener("click", async () => {
     body: JSON.stringify({ name, email, password }),
   });
 
-  const { status, message, redirectUrl } = await res.json();
+  const { status, message, redirectUrl, userEmail } = await res.json();
 
   if (status === "success") {
+    window.localStorage.setItem("userEmail", JSON.stringify(userEmail));
     alert(message); //
     if (redirectUrl) {
-      window.location.href = redirectUrl; // --> /login
+      window.location.href = redirectUrl; // --> /verify email
     }
   } else {
     alert(message); //

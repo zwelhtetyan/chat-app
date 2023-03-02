@@ -7,6 +7,7 @@ import { historyModel } from "./models/history";
 import { usersModel } from "./models/users";
 import { homeRouter } from "./routes/homeRouter";
 import { userSettingRouter } from "./routes/userSettingRouter";
+import { verifyRouter } from "./routes/verifyRouter";
 
 const PORT = process.env.PORT || 8080;
 
@@ -39,6 +40,8 @@ app.use(loginRouter);
 app.use(registerRouter);
 
 app.use(userSettingRouter);
+
+app.use(verifyRouter);
 
 const server = app.listen(PORT, () => {
   console.log("Server is running on PORT ", PORT, "http://localhost:" + PORT);
