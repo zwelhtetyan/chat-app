@@ -56,6 +56,7 @@ const registerUser = async (req: Request, res: Response) => {
 
   if (error) {
     resForErr(error.message, res);
+    return;
   }
 
   const hasUser = users.some(
@@ -65,6 +66,7 @@ const registerUser = async (req: Request, res: Response) => {
   if (hasUser) {
     const errMsg = "username or email  already exist!";
     resForErr(errMsg, res);
+    return;
   } else {
     ////////////// send code to user to verify ///////////////////
 
@@ -143,9 +145,9 @@ const verifiedEmail = (req: Request, res: Response) => {
   } else {
     const errMsg = "fill the right OTP code";
     resForErr(errMsg, res);
+    return;
   }
 
-  console.log("using verify function");
   // res.send({ data: "otp code arrive to backend" });
 };
 
