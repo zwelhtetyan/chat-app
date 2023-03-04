@@ -32,7 +32,21 @@
           <a href="/login" class="text-blue-500 hover:underline">Login</a>
         </p>
 
-        <button class="mt-8 btn-primary" id="registerBtn">Register</button>
+        <button
+          class="mt-8 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          id="registerBtn"
+        >
+          Register
+        </button>
+
+        <div class="flex items-center space-x-3 mt-5 invisible process">
+          <p>Processing</p>
+          <img
+            src="../../assets/loading.svg"
+            alt="sping"
+            class="animate-spin w-5 h-5"
+          />
+        </div>
       </div>
     </div>
 

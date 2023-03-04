@@ -24,7 +24,9 @@ updateLabelOnBlur(passwordInput, passwordInputLabel);
 
 //////////// registration process /////////
 
+const processTag = document.querySelector(".process");
 const registerBtn = document.getElementById("registerBtn");
+
 registerBtn.addEventListener("click", async () => {
   const { name, email, password } = {
     name: nameInput.value,
@@ -35,6 +37,9 @@ registerBtn.addEventListener("click", async () => {
   if (!name || !email || !password) {
     return;
   }
+
+  registerBtn.disabled = true;
+  processTag.classList.remove("invisible");
 
   const res = await fetch(`${window.location.origin}/registerUser`, {
     method: "POST",
@@ -49,10 +54,14 @@ registerBtn.addEventListener("click", async () => {
   if (status === "success") {
     window.localStorage.setItem("userEmail", JSON.stringify(userEmail));
     alert(message); //
+    processTag.classList.add("invisible");
+    registerBtn.disabled = false;
     if (redirectUrl) {
       window.location.href = redirectUrl; // --> /verify email
     }
   } else {
     alert(message); //
+    processTag.classList.add("invisible");
+    registerBtn.disabled = false;
   }
 });
