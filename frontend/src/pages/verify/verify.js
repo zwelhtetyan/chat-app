@@ -66,5 +66,11 @@ async function checkOtpCode() {
     }
   } else {
     alert(message); //
+    const inputTags = document.querySelectorAll("input");
+    inputTags.forEach((input) => {
+      input.value = "";
+    });
+    inputTags[0].focus();
+    otpArr = [];
   }
 }

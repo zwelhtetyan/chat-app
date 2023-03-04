@@ -28,6 +28,7 @@ interface RequestRegisterUser {
 }
 
 let verifyId: string;
+let verifyIdArr: string[] = [];
 
 const users = usersModel.getUsersData();
 
@@ -71,6 +72,7 @@ const registerUser = async (req: Request, res: Response) => {
     ////////////// send code to user to verify ///////////////////
 
     verifyId = gnrVerifyId(6);
+    verifyIdArr.push(verifyId);
     console.log("verify Id", verifyId);
 
     const response: ResponseRegisterUser = {
@@ -130,12 +132,17 @@ const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+console.log("verifyIdArr", verifyIdArr);
 const verifiedEmail = (req: Request, res: Response) => {
   const reqOtpCode = req.body;
-  console.log(reqOtpCode.otpCode === verifyId);
-  if (reqOtpCode.otpCode === verifyId) {
+  const hasOtpCode = verifyIdArr.find((arr) => arr === reqOtpCode.otpCode);
+  console.log(hasOtpCode);
+
+  if (hasOtpCode) {
     users.push(newUser);
     usersModel.setUsersData(users); // set Users Data
+    verifyIdArr = verifyIdArr.filter((arr) => arr !== reqOtpCode.otpCode);
+    console.log(verifyIdArr);
     const response: ResponseRegisterUser = {
       status: "success",
       message: "registration successfully!",
@@ -148,7 +155,7 @@ const verifiedEmail = (req: Request, res: Response) => {
     return;
   }
 
-  // res.send({ data: "otp code arrive to backend" });
+  res.send({ data: "otp code arrive to backend" });
 };
 
 function gnrVerifyId(length: number) {
@@ -163,8 +170,6 @@ function gnrVerifyId(length: number) {
   }
   return result.toUpperCase();
 }
-
-console.log(gnrVerifyId(5));
 
 const showRegister = (req: Request, res: Response) => {
   return res
